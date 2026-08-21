@@ -1,14 +1,17 @@
 import { Controller, Post, Body, Get } from '@nestjs/common';
+import { OrganizationsFactory } from './organizations.factory';
 import { OrganizationsService } from './organizations.service';
-import { CreateOrganizationDto } from './dto/create-organization.dto';
 
 @Controller('organizations')
 export class OrganizationsController {
-  constructor(private readonly orgsService: OrganizationsService) {}
+  constructor(
+    private readonly orgsFactory: OrganizationsFactory,
+    private readonly orgsService: OrganizationsService,
+  ) {}
 
-  @Post('create-court')
-  async createCourt(@Body() dto: CreateOrganizationDto) {
-    return await this.orgsService.createCourtWithAdmin(dto);
+  @Post('create')
+  async createCourt(@Body() body: any) {
+    return await this.orgsFactory.buildAndCreateCourt(body);
   }
 
   @Get()
