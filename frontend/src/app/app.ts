@@ -5,7 +5,7 @@ import { Products } from "./Mydashboard/products/products";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Products],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

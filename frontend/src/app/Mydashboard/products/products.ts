@@ -5,7 +5,7 @@ import { Brands } from '../brands/brands';
 
 @Component({
   selector: 'app-products',
-  imports: [Brands, RouterOutlet],
+  imports: [ RouterOutlet],
   templateUrl: './products.html',
   styleUrl: './products.css',
 })

@@ -2,7 +2,7 @@
 ROUTER PATH 
 
 يجب ان تعلم انه عندما تريد ان يعمل كومبننت داخل كومبننت فانت يجب ان تضع الكومببنت داخله لكي تستورده 
-مثلا تضع في الاب  الكومببنت لذي تريد ، في app.ts in   imports: [RouterOutlet, Products], 
+مثلا تضع في الاب  الكومببنت لذي تريد ، في app.ts in   imports: [, Products], 
 ثم تضع في الاب  الكومببنت لذي تريد ، في app.html  <app-products></app-products>
 
 لست مضططر لان تضع في app.ts اي شي في imports:  طالما تريد استعمال ال roters 
@@ -16,7 +16,9 @@ ROUTER PATH
 
 في كومبننت الاب 
 <router-outlet></router-outlet> في html 
+imports: [ RouterOutlet], نضعها في ts 
 this.router.navigate(['products/brands']); في ts 
+
  في roter.app
 {
   path: 'products',
