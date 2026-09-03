@@ -21,8 +21,10 @@ export class OrganizationCreateComponent {
     code: ''
   };
 
-  // حقن الخدمة التابعة لـ الـ RxJS وموديول الاتصال
-  constructor(private orgsService: OrganizationsService) {}
+  // حقن الخدمة التابعة لـ الـ RxJS وموديول 
+  private apiUrl = 'http://localhost:3690/organizations';
+  // الاتصال
+  constructor(private orgsService: OrganizationsService ) {}
 
   onSubmit(form: NgForm): void {
     // التحقق النهائي من لمبة أمان الصندوق المركزي قبل التمرير

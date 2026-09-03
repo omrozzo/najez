@@ -1,17 +1,26 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Controller, Post, Body, Get , Logger } from '@nestjs/common';
 import { OrganizationsFactory } from './organizations.factory';
 import { OrganizationsService } from './organizations.service';
 
 @Controller('organizations')
 export class OrganizationsController {
+  private readonly logger = new Logger(OrganizationsController.name);
   constructor(
     private readonly orgsFactory: OrganizationsFactory,
     private readonly orgsService: OrganizationsService,
   ) {}
 
-  @Post('create')
+ @Post('create')
   async createCourt(@Body() body: any) {
-    return await this.orgsFactory.buildAndCreateCourt(body);
+    try {
+      const result = await this.orgsFactory.buildAndCreateCourt(body);
+      this.logger.log(`✅ The court has been successfully saved.
+      Court ID: [${result.meta.orgInfo.id}]`);
+      return result;
+    } catch (error: any) {
+      this.logger.error(`❌ failed [${body?.code}]. reason: ${error.message}`);
+      throw error; 
+    }
   }
 
   @Get()
