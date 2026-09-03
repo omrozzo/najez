@@ -180,3 +180,6 @@ function outer() {
     function inner() {
         console.log(email); // ✅
     }
+} 
+
+//////////////////////////////

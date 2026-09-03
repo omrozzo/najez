@@ -7,8 +7,9 @@ import { IOrganization } from './interfaces/organization.interface'; // استد
 export class OrganizationsService {
   // حقن الموديل وربطه بالإنترفيس بدلاً من any
   constructor(
-    @InjectModel('Organization') 
+    // Organization سكيما في database-schema.module.ts
     // راجع سطر ١٠ في database-schema.module.ts 
+    @InjectModel('Organization') 
     private readonly orgModel: Model<IOrganization>,
   ) {}
 

@@ -33,7 +33,7 @@
       outline: none;
     }
 
-    // 🚨 الكلاس الذي يتم حقنه تلقائياً عبر [ngClass] عند الخطأ
+    /* 🚨 الكلاس الذي يتم حقنه تلقائياً عبر [ngClass] عند الخطأ */
     &.is-invalid {
       border-color: #e74c3c;
       background-color: #fdf2f2;

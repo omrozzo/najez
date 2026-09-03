@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { OrganizationsService } from './organizations.service'; // استدعاء الخدمة المشتركة
+import { OrganizationsService } from '../../services/organizations.service'; // استدعاء الخدمة المشتركة
 
 @Component({
   selector: 'app-organization-create',
-  templateUrl: './organization-create.component.html',
-  styleUrls: ['./organization-create.component.scss'],
+  templateUrl: './organization-create.html',
+  styleUrls: ['./organization-create.css'],
   standalone: true,
   imports: [FormsModule, CommonModule]
 })
@@ -42,6 +42,7 @@ export class OrganizationCreateComponent {
       // تشغيل الشرارة وإطلاق الطلب في الشبكة عبر الـ Subscribe
       this.orgsService.createOrganization(payloadForBackend).subscribe({
         next: (response) => {
+          console.log('✅ استقبال أنبوب البيانات من السيرفر:', response);
           // خطة العمل عند النجاح: إشعار وتطهير الواجهة بالكامل
           alert('تم تأسيس المنظمة القضائية بنجاح، وتمت مزامنة الـ Meta السحابية!');
           form.resetForm(); // الممسحة السحرية تعيد الخانات بيضاء ونظيفة بكلمة واحدة

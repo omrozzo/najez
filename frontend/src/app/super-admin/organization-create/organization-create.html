@@ -21,9 +21,9 @@
           #nameInput="ngModel"
           required 
           placeholder="مثال: محكمة البداية المدنية بدمشق"
-          [ngClass]="{ 'is-invalid': nameInput.errors?.required && nameInput.touched }"
+          [ngClass]="{ 'is-invalid': nameInput.errors?.['required'] && nameInput.touched }"
         />
-        <small *ngIf="nameInput.errors?.required && nameInput.touched" class="error-msg">
+        <small *ngIf="nameInput.errors?.['required'] && nameInput.touched" class="error-msg">
           ❌ اسم المحكمة مطلوب إجبارياً
         </small>
       </div>
@@ -38,9 +38,9 @@
           #typeInput="ngModel"
           required 
           placeholder="مثال: مدني / صلح / استئناف"
-          [ngClass]="{ 'is-invalid': typeInput.errors?.required && typeInput.touched }"
+          [ngClass]="{ 'is-invalid': typeInput.errors?.['required'] && typeInput.touched }"
         />
-        <small *ngIf="typeInput.errors?.required && typeInput.touched" class="error-msg">
+        <small *ngIf="typeInput.errors?.['required'] && typeInput.touched" class="error-msg">
           ❌ يرجى تحديد تصنيف المحكمة
         </small>
       </div>
@@ -55,9 +55,9 @@
           #addressInput="ngModel"
           required 
           placeholder="مثال: دمشق - قصر العدل بالمرجة"
-          [ngClass]="{ 'is-invalid': addressInput.errors?.required && addressInput.touched }"
+          [ngClass]="{ 'is-invalid': addressInput.errors?.['required'] && addressInput.touched }"
         />
-        <small *ngIf="addressInput.errors?.required && addressInput.touched" class="error-msg">
+        <small *ngIf="addressInput.errors?.['required'] && addressInput.touched" class="error-msg">
           ❌ العنوان مطلوب لتوزيع القضايا
         </small>
       </div>
@@ -72,9 +72,9 @@
           #phoneInput="ngModel"
           required 
           placeholder="مثال: 011-2211445"
-          [ngClass]="{ 'is-invalid': phoneInput.errors?.required && phoneInput.touched }"
+          [ngClass]="{ 'is-invalid': phoneInput.errors?.['required'] && phoneInput.touched }"
         />
-        <small *ngIf="phoneInput.errors?.required && phoneInput.touched" class="error-msg">
+        <small *ngIf="phoneInput.errors?.['required'] && phoneInput.touched" class="error-msg">
           ❌ يرجى إدخال خط الاتصال الساخن
         </small>
       </div>
@@ -91,12 +91,12 @@
           required 
           minlength="3" 
           placeholder="مثال: marya"
-          [ngClass]="{ 'is-invalid': (codeInput.errors?.required || codeInput.errors?.minlength) && codeInput.touched }"
+          [ngClass]="{ 'is-invalid': (codeInput.errors?.['required'] || codeInput.errors?.['minlength']) && codeInput.touched }"
         />
-        <small *ngIf="codeInput.errors?.required && codeInput.touched" class="error-msg">
+        <small *ngIf="codeInput.errors?.['required'] && codeInput.touched" class="error-msg">
           ❌ كود الربط السري مطلوب إجبارياً
         </small>
-        <small *ngIf="codeInput.errors?.minlength && codeInput.touched" class="error-msg">
+        <small *ngIf="codeInput.errors?.['minlength'] && codeInput.touched" class="error-msg">
           ⚠️ يجب أن يكون الكود 3 أحرف على الأقل
         </small>
       </div>
