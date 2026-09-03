@@ -7,7 +7,9 @@ import { IOrganization } from './interfaces/organization.interface'; // استد
 export class OrganizationsService {
   // حقن الموديل وربطه بالإنترفيس بدلاً من any
   constructor(
-    @InjectModel('Organization') private readonly orgModel: Model<IOrganization>,
+    @InjectModel('Organization') 
+    // راجع سطر ١٠ في database-schema.module.ts 
+    private readonly orgModel: Model<IOrganization>,
   ) {}
 
   // الدالة مجبرة الآن على إرجاع مستند يطابق شروط المحكمة بالملي

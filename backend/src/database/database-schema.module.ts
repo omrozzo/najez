@@ -7,6 +7,7 @@ import { DatabaseSchemas, DB_APP } from './database.schemas';
 @Module({
   imports: [
     MongooseModule.forFeature(
+      // انظر هذا الاسم في organization.schema.ts وهو يساوي 'Organization'
       [{ name: 'Organization', schema: OrganizationSchema }],
       DB_APP,
     ),

@@ -1,64 +1,64 @@
-import { Component  ,  DoCheck} from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { OrganizationsService } from './organizations.service'; // استدعاء الخدمة المشتركة
 
 @Component({
   selector: 'app-organization-create',
-  templateUrl: './organization-create.html',
-  styleUrls: ['./organization-create.css'],
+  templateUrl: './organization-create.component.html',
+  styleUrls: ['./organization-create.component.scss'],
   standalone: true,
-  imports: [FormsModule, HttpClientModule] // استيراد موديول الاستمارات العادية والاتصال
+  imports: [FormsModule, CommonModule]
 })
+export class OrganizationCreateComponent {
 
-export class OrganizationCreateComponent  {
-
+  // كائن البيانات المحلي لمراقبة حركات الـ ngModel حياً
   datacourt: any = {
     name: '',
+    type: '',
     address: '',
     phone: '',
-    email: '',
-    website: ''
+    code: ''
   };
-  constructor(private http: HttpClient ) {}
-//  ngDoCheck(): void {
-//     console.log('🚨 أنجولار التقطت تحركاً حياً! البيانات الحالية في الذاكرة:', this.datacourt);
-//   }
-  // دالة الاستقبال والإرسال للباك إند
+
+  // حقن الخدمة التابعة لـ الـ RxJS وموديول الاتصال
+  constructor(private orgsService: OrganizationsService) {}
+
   onSubmit(form: NgForm): void {
+    // التحقق النهائي من لمبة أمان الصندوق المركزي قبل التمرير
     if (form.valid) {
-      const formData = form.value; // سحب قيم الخانات الخمس ككائن نظيف بالملي
       
-      // توجيه الطلب مباشرة إلى السيرفر الباك إند
-      this.http.post('http://localhost:3000/organizations/create', formData)
-        .subscribe({
-          next: (response) => {
-            alert('تم تأسيس المحكمة بنجاح وتوليد الـ Meta في السيرفر!');
-            form.resetForm(); // تصفير وتفريغ الخانات بعد النجاح
-          },
-          error: (error) => {
-            console.error('حدث خطأ أثناء التأسيس:', error);
-            alert('فشل التأسيس: ' + (error.error?.message || 'خطأ في اتصال السيرفر'));
-          }
-        });
+      // ترصيص وترتيب كائن البيانات الصافي ليتوافق مع سكيما الباك إند
+      const payloadForBackend = {
+        courtName: this.datacourt.name,
+        courtType: this.datacourt.type,
+        address: this.datacourt.address,
+        phoneNumber: this.datacourt.phone,
+        code: this.datacourt.code
+      };
+
+      console.log('📡 جاري فتح خط البث والاشتراك بالـ Observable...');
+
+      // تشغيل الشرارة وإطلاق الطلب في الشبكة عبر الـ Subscribe
+      this.orgsService.createOrganization(payloadForBackend).subscribe({
+        next: (response) => {
+          // خطة العمل عند النجاح: إشعار وتطهير الواجهة بالكامل
+          alert('تم تأسيس المنظمة القضائية بنجاح، وتمت مزامنة الـ Meta السحابية!');
+          form.resetForm(); // الممسحة السحرية تعيد الخانات بيضاء ونظيفة بكلمة واحدة
+        },
+        error: (error) => {
+          console.error('🚨 فشل استقبال أنبوب البيانات من السيرفر:', error);
+          alert('خطأ في التأسيس: ' + (error.error?.message || 'السيرفر غير مستقر'));
+        }
+      });
+
     } else {
-      alert('الرجاء تعبئة كافة الخانات بشكل صحيح أولاً');
+      alert('يرجى التأكد من تصحيح كافة المخالفات الحمراء في الواجهة أولاً');
     }
   }
 
-  onCodeChange(newCode: string): void {
-  // المتغير newCode يحمل الآن البيانات الحية القادمة من المتصفح مباشرة
-  console.log('هههههههههههههههه', newCode);
-
-  // يمكنك الآن تشغيل الفحص الذكي (مثل فحص إيميل الموردين أو كود المحكمة)
-
-}
-   magicFill(): void {
-    this.datacourt.name = 'محكمة البداية المدنية بدمشق';
-    this.datacourt.type = 'مدني / بداية';
-    this.datacourt.address = 'دمشق - قصر العدل بالمرجة';
-    this.datacourt.phone = '011-2211445';
-    this.datacourt.code = 'court_damascus_01';
-    
-    console.log('🔮 تم حشو البيانات في الذاكرة بنجاح من خلف الكواليس:', this.datacourt);
+  // الرادار الفوري لالتقاط أحداث ضغط الكيبورد عبر ngModelChange وحقيبة الـ $event
+  functiommmm(newCode: string): void {
+    console.log('⚡ التقاط حي ومباشر لكود المنظمة أثناء الكتابة:', newCode);
   }
 }
