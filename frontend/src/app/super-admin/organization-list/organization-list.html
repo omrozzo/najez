@@ -1,1 +1,60 @@
-<p>organization-list works!</p>
+<div class="page-container">
+  <div class="header-section">
+    <div class="header-icon">⚖️</div>
+    <h1 class="main-title">قائمة المحاكم</h1>
+    <p class="subtitle">تصفح جميع المحاكم المسجلة في النظام</p>
+  </div>
+
+
+  <div class="content-wrapper">
+
+    <div *ngIf="loading">
+      <div class="loading-indicator">
+        <div class="spinner"></div>
+        <p>جاري التحميل...</p>
+      </div>
+    </div>
+    <div class="organizations-list" *ngIf="organizations ">
+      
+      <div class="organization-item" *ngFor="let org of organizations">
+        <div class="item-icon">🏛️</div>
+        <div class="item-text">{{ getCourtName(org) }}</div>
+
+      </div>
+      
+      <div class="no-data" *ngIf="organizations.length === 0">
+        <div class="no-data-icon">📭</div>
+        <p>لا توجد محاكم مسجلة</p>
+      </div>
+
+      <div class="pagination-controls" *ngIf="organizations.length > 0">
+        <button 
+          class="pagination-btn" 
+          (click)="prevPage()" 
+          [disabled]="currentPage === 1">
+          ← السابق
+        </button>
+        
+        <span class="page-info">الصفحة {{ currentPage }}</span>
+        
+        <button 
+          class="pagination-btn" 
+          (click)="nextPage()" 
+          [disabled]="!hasMore">
+          التالي →
+        </button>
+      </div>
+
+    </div>
+
+    <!-- هذا القالب البديل (loadingTemplate) يعمل كـ Spinner ويختفي بلمح البصر بمجرد وصول البيانات -->
+    <ng-template #loadingTemplate>
+      <div class="loading-indicator">
+        <div class="spinner"></div>
+        <p>جاري التحميل...</p>
+      </div>
+    </ng-template>
+
+  </div>
+</div>
+<router-outlet></router-outlet>

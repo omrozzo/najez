@@ -1,6 +1,7 @@
-import { Controller, Post, Body, Get , Logger } from '@nestjs/common';
+import { Controller, Post, Body, Get, Query, Logger } from '@nestjs/common';
 import { OrganizationsFactory } from './organizations.factory';
 import { OrganizationsService } from './organizations.service';
+
 
 @Controller('organizations')
 export class OrganizationsController {
@@ -23,9 +24,10 @@ export class OrganizationsController {
     }
   }
 
+  // getOrganizationsWithPagination
   @Get()
-  async getAll() {
-    return await this.orgsService.findAllOrgs();
+  async getAll(@Query('page') page: number = 1, @Query('limit') limit: number = 5) {
+    return await this.orgsService.findAllOrgsWithPagination(page, limit);
   }
 }
 

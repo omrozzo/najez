@@ -159,4 +159,10 @@ class User {
 لكن عندما يكون الكلاس محقون فتستطيع استعمال اي فانكشن عن طريق الحقن في كاسنتشركشر 
 
 ////////////////////////////////////
-
+<!--  getCourtName(org) -->
+عند وضع الفانكشن بين قوسين بهذه الطريقه. فانك تعطيه بيانات وتشغله وتاخذ نتيجته ، ثلاث اشيا مره واحده 
+html : <div class="item-text">{{ getCourtName(org) }}</div> 
+ts :   getCourtName(org: any): string {
+    return org?.name || org?.courtName || org?.meta?.orgInfo?.name || 'غير معروف';
+  }
+  

@@ -5,12 +5,12 @@ import { OrganizationsService } from '../../services/organizations.service'; // 
 
 @Component({
   selector: 'app-organization-create',
-  templateUrl: './organization-create.html',
-  styleUrls: ['./organization-create.css'],
+  templateUrl: './organization-create-court.html',
+  styleUrls: ['./organization-create-court.css'],
   standalone: true,
   imports: [FormsModule, CommonModule]
 })
-export class OrganizationCreateComponent {
+export class OrganizationCreateCourtComponent {
 
   // كائن البيانات المحلي لمراقبة حركات الـ ngModel حياً
   datacourt: any = {

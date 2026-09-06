@@ -26,4 +26,13 @@ export class OrganizationsService {
   async findAllOrgs(): Promise<IOrganization[]> {
     return await this.orgModel.find().exec();
   }
+
+  // دالة جلب المحاكم مع التصفح (Pagination)
+  async findAllOrgsWithPagination(page: number = 1, limit: number = 5): Promise<IOrganization[]> {
+    const skip = (page - 1) * limit;
+    return await this.orgModel.find()
+      .skip(skip)
+      .limit(limit)
+      .exec();
+  }
 }

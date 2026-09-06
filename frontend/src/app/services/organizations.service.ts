@@ -28,6 +28,16 @@ export class OrganizationsService {
   getAllOrganizations(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
+
+  /**
+   * 3️⃣ دالة جلب المنظمات مع التصفح (Pagination):
+   * تدعم infinite scroll - جلب عدد محدد من العناصر مع إمكانية جلب المزيد
+   * @param page رقم الصفحة الحالية
+   * @param limit عدد العناصر في كل صفحة
+   */
+  getOrganizationsWithPagination(page:number , limit :number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}?page=${page}&limit=${limit}`);
+  }
 }
 
 // organizations/create
