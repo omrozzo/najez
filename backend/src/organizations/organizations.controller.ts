@@ -15,8 +15,7 @@ export class OrganizationsController {
   async createCourt(@Body() body: any) {
     try {
       const result = await this.orgsFactory.buildAndCreateCourt(body);
-      this.logger.log(`✅ The court has been successfully saved.
-      Court ID: [${result.meta.orgInfo.id}]`);
+      this.logger.log(`✅ The court has been successfully saved. Court ID: [${result.meta.orgInfo.id}]`);
       return result;
     } catch (error: any) {
       this.logger.error(`❌ failed [${body?.code}]. reason: ${error.message}`);

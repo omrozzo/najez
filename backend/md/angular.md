@@ -166,3 +166,14 @@ ts :   getCourtName(org: any): string {
     return org?.name || org?.courtName || org?.meta?.orgInfo?.name || 'غير معروف';
   }
   
+
+  <!-- prarms:id in angular  -->
+
+  تكلما في mongos عن عمل الروابط وكيف تظهر ومتا يتوقف ويكون مابعد الاستفهام لادخل له في الرابط .
+  الان سنتكلم عن رابط frontendangular
+  فهي تتقبل id وياتي مثال 
+   this.router.navigate(['/super-admin/court-data', courtId]);
+   فيفتح بهذا الشكل   path: 'super-admin/court-data/:id',
+   اذا ال -data', courtId]); تمشي مع بعضها 
+
+   <!--  -->

@@ -16,12 +16,11 @@
     </div>
     <div class="organizations-list" *ngIf="organizations ">
       
-      <div class="organization-item" *ngFor="let org of organizations">
+      <div class="organization-item" *ngFor="let org of organizations" (click)="navigateToCourtData(org)">
         <div class="item-icon">🏛️</div>
         <div class="item-text">{{ getCourtName(org) }}</div>
-
       </div>
-      
+       
       <div class="no-data" *ngIf="organizations.length === 0">
         <div class="no-data-icon">📭</div>
         <p>لا توجد محاكم مسجلة</p>

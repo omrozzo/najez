@@ -1,17 +1,17 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { OrganizationsService } from '../../services/organizations.service'; // استدعاء الخدمة المشتركة
+import { OrganizationsService } from '../../../services/organizations.service'; // استدعاء الخدمة المشتركة
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, RouterOutlet, Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-organization-list',
+  selector: 'app-court-review',
   imports: [CommonModule, RouterModule],
-  templateUrl: './organization-list.html',
-  styleUrls: ['./organization-list.css'],
+  templateUrl: './court-review.html',
+  styleUrls: ['./court-review.css'],
 })
-export class OrganizationList implements OnInit {
+export class CourtReview implements OnInit {
   // 1. تحويل المتغير إلى أوبسيرفابل لمراقبة التدفق المباشر للبيانات
   organizations:any; 
   currentPage: number = 1;
@@ -19,7 +19,7 @@ export class OrganizationList implements OnInit {
   hasMore: boolean = true;
   loading: boolean = false;
 
-  constructor(private orgsService: OrganizationsService, private cdr: ChangeDetectorRef) {}
+  constructor(private orgsService: OrganizationsService, private cdr: ChangeDetectorRef, private router: Router, private route: ActivatedRoute) {}
   ngOnInit() {
     this.loadOrganizations();
   }
@@ -74,5 +74,12 @@ export class OrganizationList implements OnInit {
 
   getCourtName(org: any): string {
     return org?.name || org?.courtName || org?.meta?.orgInfo?.name || 'غير معروف';
+  }
+
+  navigateToCourtData(org: any) {
+    const courtId = org?.meta?.orgInfo?.id || org?.id || org?._id;
+    if (courtId) {
+      this.router.navigate(['/super-admin/court-data', courtId]);
+    }
   }
 }
