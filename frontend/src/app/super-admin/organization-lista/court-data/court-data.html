@@ -1,0 +1,81 @@
+<div class="page-container">
+  <div class="header-section">
+    <div class="header-icon">🏛️</div>
+    <h1 class="main-title">تفاصيل المحكمة</h1>
+    <p class="subtitle">عرض معلومات المحكمة المحددة</p>
+  </div>
+
+  <div class="content-wrapper">
+    <div class="loading-indicator" *ngIf="loading">
+      <div class="spinner"></div>
+      <p>جاري تحميل البيانات...</p>
+    </div>
+
+    <div class="error-message" *ngIf="error">
+      <div class="error-icon">⚠️</div>
+      <p>{{ error }}</p>
+    </div>
+
+    <div class="court-details" *ngIf="!loading && !error && courtData">
+      <div class="detail-card">
+        <div class="card-header">
+          <div class="card-icon">⚖️</div>
+          <h2 class="card-title">{{ getCourtName() }}</h2>
+        </div>
+
+        <div class="card-body">
+          <div class="detail-row">
+            <div class="detail-icon">📋</div>
+            <div class="detail-content">
+              <div class="detail-label">نوع المحكمة</div>
+              <div class="detail-value">{{ getCourtType() }}</div>
+            </div>
+          </div>
+
+          <div class="detail-row">
+            <div class="detail-icon">📍</div>
+            <div class="detail-content">
+              <div class="detail-label">العنوان</div>
+              <div class="detail-value">{{ getAddress() }}</div>
+            </div>
+          </div>
+
+          <div class="detail-row">
+            <div class="detail-icon">📞</div>
+            <div class="detail-content">
+              <div class="detail-label">رقم الهاتف</div>
+              <div class="detail-value">{{ getPhoneNumber() }}</div>
+            </div>
+          </div>
+
+          <div class="detail-row">
+            <div class="detail-icon">🔑</div>
+            <div class="detail-content">
+              <div class="detail-label">الكود</div>
+              <div class="detail-value">{{ getCode() }}</div>
+            </div>
+          </div>
+
+          <div class="detail-row">
+            <div class="detail-icon">🆔</div>
+            <div class="detail-content">
+              <div class="detail-label">معرف المحكمة</div>
+              <div class="detail-value">{{ getOrgId() }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <button class="back-btn" (click)="goBack()">
+            ← العودة للقائمة
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="no-data" *ngIf="!loading && !error && !courtData">
+      <div class="no-data-icon">📭</div>
+      <p>لم يتم العثور على بيانات المحكمة</p>
+    </div>
+  </div>
+</div>

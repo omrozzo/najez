@@ -1,11 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Products } from "./Mydashboard/products/products";
 // import { Appauth } from './auth/appauth/appauth';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,
-  ],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

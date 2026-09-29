@@ -1,0 +1,47 @@
+<div class="page-container">
+  <div class="header-section">
+    <div class="header-icon">⚖️</div>
+    <h1 class="main-title">قائمة المحاكم</h1>
+    <p class="subtitle">تصفح جميع المحاكم المسجلة في النظام</p>
+  </div>
+
+  <div class="content-wrapper">
+    <div *ngIf="organizations$ | async as result">
+      <div class="loading-indicator" *ngIf="result.data.length === 0">
+        <div class="spinner"></div>
+        <p>جاري التحميل...</p>
+      </div>
+      
+      <div class="organizations-list" *ngIf="result.data.length > 0">
+        <div class="organization-item" *ngFor="let org of result.data" (click)="navigateToCourtData(org)">
+          <div class="item-icon">🏛️</div>
+          <div class="item-text">{{ getCourtName(org) }}</div>
+        </div>
+         
+        <div class="pagination-controls">
+          <button 
+            class="pagination-btn" 
+            (click)="prevPage(currentPage$.value)" 
+            [disabled]="currentPage$.value === 1">
+            ← السابق
+          </button>
+          
+          <span class="page-info">الصفحة {{ currentPage$.value }}</span>
+          
+          <button 
+            class="pagination-btn" 
+            (click)="nextPage(result.hasMore)" 
+            [disabled]="!result.hasMore">
+            التالي →
+          </button>
+        </div>
+      </div>
+
+      <div class="no-data" *ngIf="result.data.length === 0">
+        <div class="no-data-icon">📭</div>
+        <p>لا توجد محاكم مسجلة</p>
+      </div>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

@@ -1,0 +1,29 @@
+<div class="page-container">
+  <h1>Create User Admin</h1>
+  <p>Form to create a new user admin</p>
+  
+  <button class="test-btn" routerLink="test">الذهاب إلى Test (Child Route)</button>
+  
+  <form #user="ngForm" (ngSubmit)="onSubmit(user)">
+    <div>
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" ngModel required>
+    </div>
+    <div>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email">
+    </div>
+    <div>
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password">
+    </div>
+    <div>
+      <label for="id">ID</label>
+      <input type="text" name="ID"> 
+    </div>
+    <button type="submit">Create User Admin</button>
+  </form>
+  
+</div>
+
+<router-outlet></router-outlet>

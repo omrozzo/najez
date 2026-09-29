@@ -1,0 +1,112 @@
+<main class="page-shell">
+  <section class="form-container">
+    <div class="brand-mark" aria-hidden="true">⚖</div>
+    <h1>لوحة تأسيس المحاكم المركزية</h1>
+    <p class="subtitle">منصة ناجز الإدارية</p>
+    <div class="access-note">
+      <span aria-hidden="true">●</span>
+      خاص بآدمن ناجز الرئيسي فقط
+    </div>
+
+    <!-- المظلة المركزية للمحرك العام -->
+    <form #courtForm="ngForm" (ngSubmit)="onSubmit(courtForm)">
+      
+      <!-- 1. حقل اسم المحكمة -->
+      <div class="form-group">
+        <label>اسم المحكمة الرسمي:</label>
+        <input 
+          type="text" 
+          name="name"
+          [(ngModel)]="datacourt.name"  
+          #nameInput="ngModel"
+          required 
+          placeholder="مثال: محكمة البداية المدنية بدمشق"
+          [ngClass]="{ 'is-invalid': nameInput.errors?.['required'] && nameInput.touched }"
+        />
+        <small *ngIf="nameInput.errors?.['required'] && nameInput.touched" class="error-msg">
+          ❌ اسم المحكمة مطلوب إجبارياً
+        </small>
+      </div>
+
+      <!-- 2. حقل نوع التصنيف -->
+      <div class="form-group">
+        <label>نوع التصنيف القضائي:</label>
+        <input 
+          type="text" 
+          name="courtType" 
+          [(ngModel)]="datacourt.type"
+          #typeInput="ngModel"
+          required 
+          placeholder="مثال: مدني / صلح / استئناف"
+          [ngClass]="{ 'is-invalid': typeInput.errors?.['required'] && typeInput.touched }"
+        />
+        <small *ngIf="typeInput.errors?.['required'] && typeInput.touched" class="error-msg">
+          ❌ يرجى تحديد تصنيف المحكمة
+        </small>
+      </div>
+
+      <!-- 3. حقل العنوان الجغرافي -->
+      <div class="form-group">
+        <label>العنوان الجغرافي الكامل:</label>
+        <input 
+          type="text" 
+          name="address" 
+          [(ngModel)]="datacourt.address" 
+          #addressInput="ngModel"
+          required 
+          placeholder="مثال: دمشق - قصر العدل بالمرجة"
+          [ngClass]="{ 'is-invalid': addressInput.errors?.['required'] && addressInput.touched }"
+        />
+        <small *ngIf="addressInput.errors?.['required'] && addressInput.touched" class="error-msg">
+          ❌ العنوان مطلوب لتوزيع القضايا
+        </small>
+      </div>
+
+      <!-- 4. حقل رقم الهاتف -->
+      <div class="form-group">
+        <label>رقم الهاتف العام:</label>
+        <input 
+          type="text" 
+          name="phoneNumber" 
+          [(ngModel)]="datacourt.phone"
+          #phoneInput="ngModel"
+          required 
+          placeholder="مثال: 011-2211445"
+          [ngClass]="{ 'is-invalid': phoneInput.errors?.['required'] && phoneInput.touched }"
+        />
+        <small *ngIf="phoneInput.errors?.['required'] && phoneInput.touched" class="error-msg">
+          ❌ يرجى إدخال خط الاتصال الساخن
+        </small>
+      </div>
+
+      <!-- 5. حقل كود الربط -->
+      <div class="form-group">
+        <label>كود الربط البرمجي السري (Code):</label>
+        <input 
+          type="text" 
+          name="code" 
+          [(ngModel)]="datacourt.code"
+          #codeInput="ngModel"
+          (ngModelChange)="functiommmm($event)"
+          required 
+          minlength="3" 
+          placeholder="مثال: marya"
+          [ngClass]="{ 'is-invalid': (codeInput.errors?.['required'] || codeInput.errors?.['minlength']) && codeInput.touched }"
+        />
+        <small *ngIf="codeInput.errors?.['required'] && codeInput.touched" class="error-msg">
+          ❌ كود الربط السري مطلوب إجبارياً
+        </small>
+        <small *ngIf="codeInput.errors?.['minlength'] && codeInput.touched" class="error-msg">
+          ⚠️ يجب أن يكون الكود 3 أحرف على الأقل
+        </small>
+      </div>
+
+      <!-- الزر يقرأ حالة المظلة الكبيرة ليفتح تلقائياً عند اكتمال الشروط -->
+      <button type="submit" [disabled]="courtForm.invalid">
+        <span>تأسيس المحكمة وإطلاق النظام</span>
+        <span class="button-arrow" aria-hidden="true">←</span>
+      </button>
+
+    </form>
+  </section>
+</main>
