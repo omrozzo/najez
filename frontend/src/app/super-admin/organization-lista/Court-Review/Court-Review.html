@@ -5,55 +5,43 @@
     <p class="subtitle">تصفح جميع المحاكم المسجلة في النظام</p>
   </div>
 
-
   <div class="content-wrapper">
-
-    <div *ngIf="loading">
-      <div class="loading-indicator">
+    <div *ngIf="organizations$ | async as result">
+      <div class="loading-indicator" *ngIf="result.data.length === 0">
         <div class="spinner"></div>
         <p>جاري التحميل...</p>
       </div>
-    </div>
-    <div class="organizations-list" *ngIf="organizations ">
       
-      <div class="organization-item" *ngFor="let org of organizations" (click)="navigateToCourtData(org)">
-        <div class="item-icon">🏛️</div>
-        <div class="item-text">{{ getCourtName(org) }}</div>
+      <div class="organizations-list" *ngIf="result.data.length > 0">
+        <div class="organization-item" *ngFor="let org of result.data" (click)="navigateToCourtData(org)">
+          <div class="item-icon">🏛️</div>
+          <div class="item-text">{{ getCourtName(org) }}</div>
+        </div>
+         
+        <div class="pagination-controls">
+          <button 
+            class="pagination-btn" 
+            (click)="prevPage(currentPage$.value)" 
+            [disabled]="currentPage$.value === 1">
+            ← السابق
+          </button>
+          
+          <span class="page-info">الصفحة {{ currentPage$.value }}</span>
+          
+          <button 
+            class="pagination-btn" 
+            (click)="nextPage(result.hasMore)" 
+            [disabled]="!result.hasMore">
+            التالي →
+          </button>
+        </div>
       </div>
-       
-      <div class="no-data" *ngIf="organizations.length === 0">
+
+      <div class="no-data" *ngIf="result.data.length === 0">
         <div class="no-data-icon">📭</div>
         <p>لا توجد محاكم مسجلة</p>
       </div>
-
-      <div class="pagination-controls" *ngIf="organizations.length > 0">
-        <button 
-          class="pagination-btn" 
-          (click)="prevPage()" 
-          [disabled]="currentPage === 1">
-          ← السابق
-        </button>
-        
-        <span class="page-info">الصفحة {{ currentPage }}</span>
-        
-        <button 
-          class="pagination-btn" 
-          (click)="nextPage()" 
-          [disabled]="!hasMore">
-          التالي →
-        </button>
-      </div>
-
     </div>
-
-    <!-- هذا القالب البديل (loadingTemplate) يعمل كـ Spinner ويختفي بلمح البصر بمجرد وصول البيانات -->
-    <ng-template #loadingTemplate>
-      <div class="loading-indicator">
-        <div class="spinner"></div>
-        <p>جاري التحميل...</p>
-      </div>
-    </ng-template>
-
   </div>
 </div>
 <router-outlet></router-outlet>

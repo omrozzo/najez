@@ -4,6 +4,7 @@ import { OrganizationCreateCourtComponent } from './super-admin/organization-cre
 import { CourtReview } from './super-admin/organization-lista/Court-Review/Court-Review';
 import { CreateUserAdmin } from './super-admin/create-user-admin/create-user-admin';
 import { CourtData } from './super-admin/organization-lista/court-data/court-data';
+import { Test } from './super-admin/create-user-admin/test/test';
 
 
 
@@ -33,7 +34,15 @@ export const routes: Routes = [
 
 {
     path: 'super-admin/create-user-admin',
-    component: CreateUserAdmin
+    component: CreateUserAdmin,
+    children: [
+        {
+            path: 'test',
+            component: Test
+        }
+    ]
 }
+
+
 
 ];

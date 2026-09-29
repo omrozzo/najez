@@ -35,12 +35,6 @@
 جعل الحقل الزامي 
 
 <!-- <form #example="ngForm"  -->
-يجب ان تعلم اننا عند وضع هذا فاننا نشغل خدمه من جوجل 
-هذه الخدمه تسمح اولا لك باستخدام <form  (ngSubmit)= "onSubmit(example)" 
-وهذا ال example يرا مراقب لكل البيانات التي في الداخل 
-فيجب عندما يضغط اي button type="submit"  فمتا عمل هذا مندون وضع فانكشن فيه بيانات فيعمل وكاننا اعطيناه البيانات 
-
-ملاحظه :: 
 بدونه لايعمل 
 required ❌ ولا 
 invalid ❌
@@ -52,6 +46,10 @@ onSubmit(form: NgForm) {
     form.resetForm(); // مسح الخانات بكلمة واحدة
   });
 }
+ (test.touched / test.dirty) ❌ ولا 
+ وايضا عند اعطايه ل submit  فاننا نعطيه كل البيانات  مثل 
+ #courtForm="ngForm" (ngSubmit)="onSubmit(courtForm)"> 
+ فلست بحاجه لوضع الفانكشن sunmit في تايب وجلب البياانت عليه وتعبيتها 
 
 <!--  #nameInput. from ngmodule -->
  #typeInput="ngModel" 

@@ -1,9 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { OrganizationsService } from '../../../services/organizations.service'; // استدعاء الخدمة المشتركة
+import { Component, OnInit } from '@angular/core';
+import { OrganizationsService } from '../../../services/organizations.service';
 import { CommonModule } from '@angular/common';
-import { RouterModule, RouterOutlet, Router, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
+import { Observable, BehaviorSubject, combineLatest, of } from 'rxjs';
+import { map, tap, startWith, catchError, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-court-review',
@@ -12,63 +12,51 @@ import { map, tap } from 'rxjs/operators';
   styleUrls: ['./court-review.css'],
 })
 export class CourtReview implements OnInit {
-  // 1. تحويل المتغير إلى أوبسيرفابل لمراقبة التدفق المباشر للبيانات
-  organizations:any; 
-  currentPage: number = 1;
+  currentPage$ = new BehaviorSubject<number>(1);
   itemsPerPage: number = 5;
-  hasMore: boolean = true;
-  loading: boolean = false;
+  
+  organizations$: Observable<any> = combineLatest([this.currentPage$]).pipe(
+    tap(([page]) => console.log('Loading page:', page)),
+    map(([page]) => page),
+    switchMap((page) => 
+      this.orgsService.getOrganizationsWithPagination(page, this.itemsPerPage).pipe(
+        tap(data => console.log("Raw data from API:", data)),
+        map((data: any) => {
+          if (Array.isArray(data)) {
+            return {
+              data: data,
+              hasMore: data.length === this.itemsPerPage
+            };
+          } else {
+            console.warn("Unexpected data format:", data);
+            return {
+              data: [],
+              hasMore: false
+            };
+          }
+        }),
+        catchError(error => {
+          console.error("Error loading organizations:", error);
+          return of({ data: [], hasMore: false });
+        })
+      )
+    ),
+    startWith({ data: [], hasMore: false })
+  );
 
-  constructor(private orgsService: OrganizationsService, private cdr: ChangeDetectorRef, private router: Router, private route: ActivatedRoute) {}
-  ngOnInit() {
-    this.loadOrganizations();
-  }
+  constructor(private orgsService: OrganizationsService, private router: Router, private route: ActivatedRoute) {}
+  
+  ngOnInit() {}
 
-  loadOrganizations() {
-    this.loading = true; // تشغيل مؤشر التحميل
-    this.cdr.detectChanges(); // تنبيه الواجهة فوراً بأن وضع التحميل قد بدأ
-
-    // 4. استخدام .subscribe() المباشر والتقليدي لاستخراج البيانات
-    this.orgsService.getOrganizationsWithPagination(this.currentPage, this.itemsPerPage).subscribe({
-      next: (data: any) => {
-        console.log("Raw data from API:", data);
-        
-        // 5. الشروط التقليدية لتفصيص البيانات وحفظها في المصفوفة العادية
-        if (Array.isArray(data)) {
-          this.organizations = data;
-        } else {
-          this.organizations = [];
-          console.warn("Unexpected data format:", data);
-        }
-        
-        // تحديث الفلاتر وقفل وضع التحميل
-        this.hasMore = this.organizations.length === this.itemsPerPage;
-        this.loading = false; 
-        
-        console.log("Processed organizations assigned via subscribe:", this.organizations);
-        
-        // 6. إجبار الواجهة يدوياً على التحديث وعرض البيانات فوراً
-        this.cdr.detectChanges(); 
-      },
-      error: (error) => {
-        console.error("Error loading organizations:", error);
-        this.loading = false;
-        this.cdr.detectChanges(); // تحديث الواجهة حتى في حال حدوث خطأ لقفل الـ Spinner
-      }
-    });
-  }
-
-  nextPage() {
-    if (this.hasMore) {
-      this.currentPage++;
-      this.loadOrganizations();
+  nextPage(hasMore: boolean) {
+    if (hasMore) {
+      this.currentPage$.next(this.currentPage$.value + 1);
     }
   }
 
-  prevPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.loadOrganizations();
+  prevPage(currentPage: number) {
+    if (currentPage > 1) {
+      this.currentPage$.next(currentPage - 1);
     }
   }
 
